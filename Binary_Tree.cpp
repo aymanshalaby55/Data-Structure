@@ -67,27 +67,55 @@ public:
         }
         return res;
     }
-    int max_Hight()
+    int max_Hight() // to find max hight of B_tree
     {
         int res = 0;
         if (left)
         {
-            res = max(res, left->max_elment() + 1);
+            res = left->max_Hight() + 1;
         }
         if (right)
         {
-            res = max(res, right->max_elment() + 1);
+            res = max(res, right->max_Hight() + 1);
         }
+        return res;
+    }
+    int Count_nodes()
+    {
+        int res = 0;
+        if (left)
+        {
+            res += left->Count_nodes() + 1;
+        }
+        if (right)
+        {
+            res += right->Count_nodes() + 1;
+        }
+        return res;
+    }
+    int count_leafs()
+    {
+        int res = 0;
+        if (left)
+        {
+            left->Count_nodes();
+        }
+        if (right)
+        {
+            right->Count_nodes();
+        }
+        res = max(res,res+1);
         return res;
     }
 };
 int main()
 {
-    cout << "hello github";
+    // cout << "hello github";
     tree t(0);
-    t.add({1, 2, 3, 4}, {'L', 'R', 'L', 'R'});
+    t.add({1}, {'L'});
+    t.add({2}, {'R'});
     t.print_inorder();
     cout << endl;
-    cout << t.max_Hight() << endl;
+    cout << t.count_leafs() << endl;
     return 0;
 }
