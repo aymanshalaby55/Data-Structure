@@ -83,11 +83,11 @@ public:
 };
 int main()
 {
+    cout << "hello github";
     tree t(0);
     t.add({1, 2, 3, 4}, {'L', 'R', 'L', 'R'});
     t.print_inorder();
     cout << endl;
     cout << t.max_Hight() << endl;
-    ;
     return 0;
 }
