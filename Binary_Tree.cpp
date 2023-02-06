@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 using namespace std;
 /*
 1- max elment in tree [T]
@@ -20,7 +21,6 @@ public:
     }
     void print_inorder()
     {
-
         if (left)
         {
             left->print_inorder();
@@ -54,7 +54,7 @@ public:
             }
         }
     }
-    int max_elment()
+    int max_elment() // find max elment in tree
     {
         int res = data;
         if (left)
@@ -80,7 +80,7 @@ public:
         }
         return res;
     }
-    int Count_nodes()
+    int Count_nodes() // get all number of nodes in tree
     {
         int res = 0;
         if (left)
@@ -93,7 +93,7 @@ public:
         }
         return res;
     }
-    int count_leafs()
+    int count_leafs() // get number of leaf nodes
     {
         int res = 0;
         if (left)
@@ -104,18 +104,79 @@ public:
         {
             right->Count_nodes();
         }
-        res = max(res,res+1);
+        res = max(res, res + 1);
         return res;
+    }
+    bool is_exist(int value) // search for value in tree
+    {
+        bool res = res == value;
+        if (left && !res) // you don't need to search any more if you find the value
+        {
+            res = left->is_exist(value);
+        }
+        if (right && !res)
+        {
+            res = right->is_exist(value);
+        }
+        return res;
+    }
+    void level_order_Traversal() // Breadth : level by level
+    {
+        // complexity O(n)
+        queue<tree *> q;
+        q.push(this);
+        while (!q.empty())
+        {
+            auto tmp = q.front();
+            if (tmp->left)
+            {
+                q.push(tmp->left);
+            }
+            if (tmp->right)
+            {
+                q.push(tmp->right);
+            }
+            cout << q.front()->data << " ";
+            q.pop();
+        }
+    }
+    void level_order_Traversal2() // this function return the number of levels
+    {
+        // complexity O(n)
+        queue<tree *> q;
+        q.push(this);
+        int level = 0;
+        while (!q.empty())
+        {
+            int sz = q.size();
+            cout << "Level " << level << ":";
+            while (sz--)
+            {
+                auto tmp = q.front();
+                if (tmp->left)
+                {
+                    q.push(tmp->left);
+                }
+                if (tmp->right)
+                {
+                    q.push(tmp->right);
+                }
+                cout << q.front()->data << " ";
+                q.pop();
+            }
+            level++;
+            cout << endl;
+        }
     }
 };
 int main()
 {
     // cout << "hello github";
     tree t(0);
-    t.add({1}, {'L'});
-    t.add({2}, {'R'});
-    t.print_inorder();
+    t.add({4, 8}, {'L', 'L'});
+    t.add({3, 5}, {'R', 'R'});
+    t.add({3, 6}, {'R', 'L'});
+    t.level_order_Traversal2();
     cout << endl;
-    cout << t.count_leafs() << endl;
     return 0;
 }
