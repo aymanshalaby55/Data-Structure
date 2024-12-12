@@ -10,4 +10,6 @@
 
 # impelementation :
 ### how can we build data structure like that ?
-- 
+- as we have 26 letter of english, then every node must have 26 child.
+- and when iserting or searching a letter we must look if there exsist a child of the with the order of the letter if the alphabet order.
+> letter - 'a' -> index of the letter.
